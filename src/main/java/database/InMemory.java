@@ -5,7 +5,7 @@ import repositories.StudentRepo;
 /**
  * Created by Gebruiker on 18-1-2017.
  */
-public class InMemory implements iBorlowRepo {
+public class InMemory {
 
     private StudentRepo stuffRepo;
 
@@ -13,7 +13,6 @@ public class InMemory implements iBorlowRepo {
 
     }
 
-    @Override
     public StudentRepo getStudent() {
         return stuffRepo;
     }

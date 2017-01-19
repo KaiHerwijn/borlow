@@ -1,63 +1,36 @@
 package database;
 
-import repositories.StudentRepo;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.List;
 
 /**
  * Created by Gebruiker on 16-1-2017.
  */
-public class Database implements iBorlowRepo {
-    private static Database instance = null;
-    private StudentRepo stuffRepo;
-    private Connection connection;
+public abstract class Database <E> {
 
-    protected Database() {
-        LoadDriver();
+    private final static String driver = "com.mysql.cj.jdbc.Driver";
+    private final static String database = "jdbc:mysql://localhost:3306/borlow?serverTimezone=UTC";
+    private final static String username = "root";
+    private final static String  password = "";
 
-        stuffRepo = new StudentRepo(this);
+    protected Connection connection = null;
+    protected PreparedStatement preparedStatement;
+    protected ResultSet resultSet = null;
+
+    protected void getConnection() throws ClassNotFoundException, SQLException {
+        Class.forName(driver);
+        connection = DriverManager.getConnection(database, username, password);
     }
 
-    public Connection getStatement() {
-        connection = null;
-        try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/borlow?serverTimezone=UTC", "root", "");
-            Statement statement = connection.createStatement();
-            return connection;
-
-        } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console");
-            e.printStackTrace();
+    protected void closeAll() throws SQLException {
+        preparedStatement.close();
+        if(resultSet != null) {
+            resultSet.close();
         }
-
-        return null;
+        connection.close();
     }
 
-    private void LoadDriver() {
-        System.out.println("Loading driver...");
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            System.out.println("Driver loaded!");
-        } catch (ClassNotFoundException e) {
-            throw new IllegalStateException("Cannot find the driver in the classpath!", e);
-        }
-
-        System.out.println("MySQL JDBC Driver Registered!");
-    }
-
-    public static Database getInstance() {
-        if(instance == null) {
-            instance = new Database();
-        }
-        return instance;
-    }
-
-    public StudentRepo getStudent() {
-        return stuffRepo;
-    }
-
+    public abstract int add(String name, String address, String company) throws SQLException, ClassNotFoundException;
+    public abstract List<E> getAll() throws SQLException, ClassNotFoundException;
+    public abstract E get(int id) throws SQLException, ClassNotFoundException;
 }
