@@ -1,6 +1,6 @@
 package database;
 
-import repositories.StuffRepo;
+import repositories.StudentRepo;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,13 +12,13 @@ import java.sql.Statement;
  */
 public class Database implements iBorlowRepo {
     private static Database instance = null;
-    private StuffRepo stuffRepo;
+    private StudentRepo stuffRepo;
     private Connection connection;
 
     protected Database() {
         LoadDriver();
 
-        stuffRepo = new StuffRepo(this);
+        stuffRepo = new StudentRepo(this);
     }
 
     public Connection getStatement() {
@@ -56,7 +56,7 @@ public class Database implements iBorlowRepo {
         return instance;
     }
 
-    public StuffRepo getStuff() {
+    public StudentRepo getStudent() {
         return stuffRepo;
     }
 

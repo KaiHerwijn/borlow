@@ -1,6 +1,6 @@
-import repositories.StuffRepo;
-import endpoints.StuffResource;
-import models.Stuff;
+import models.Student;
+import repositories.StudentRepo;
+import endpoints.studentResource;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -22,22 +22,22 @@ public class StuffResourceTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Mock
-    StuffRepo stuffRepo = new StuffRepo(null);
+    StudentRepo stuffRepo = new StudentRepo(null);
 
     @Test
     public void getAll_ToSuccess() {
-        StuffResource sr = new StuffResource();
-        List<Stuff> stuffList = sr.getAll();
+        studentResource sr = new studentResource();
+        List<Student> studentList = sr.getAll();
 
         verify(stuffRepo, times(1)).getAll();
     }
 
     @Test
     public void addStuff_ToSuccess() {
-        StuffResource sr = new StuffResource();
-        sr.add("Bus");
+        studentResource sr = new studentResource();
+        sr.add("Bart", "Bartbaan", "");
 
-        verify(stuffRepo, times(1)).add("Bus");
+        verify(stuffRepo, times(1)).add("Bus", "Bartbaan", "");
     }
 
     @Test

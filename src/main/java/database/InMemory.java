@@ -1,20 +1,20 @@
 package database;
 
-import repositories.StuffRepo;
+import repositories.StudentRepo;
 
 /**
  * Created by Gebruiker on 18-1-2017.
  */
 public class InMemory implements iBorlowRepo {
 
-    private StuffRepo stuffRepo;
+    private StudentRepo stuffRepo;
 
     public InMemory() {
 
     }
 
     @Override
-    public StuffRepo getStuff() {
+    public StudentRepo getStudent() {
         return stuffRepo;
     }
 }

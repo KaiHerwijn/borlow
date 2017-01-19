@@ -7,7 +7,7 @@ import java.util.List;
  */
 public interface iResource<E> {
 
-    void add(String name);
+    void add(String name, String address, String company);
     List<E> getAll();
     E get(int id);
 }
