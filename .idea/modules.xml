@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/borlow.iml" filepath="$PROJECT_DIR$/borlow.iml" />
+      <module fileurl="file://$USER_HOME$/Downloads/mysql-connector-java-5.1.40/mysql-connector-java-5.1.40/mysql-connector-java-5.1.40.iml" filepath="$USER_HOME$/Downloads/mysql-connector-java-5.1.40/mysql-connector-java-5.1.40/mysql-connector-java-5.1.40.iml" />
+    </modules>
+  </component>
+</project>

@@ -16,7 +16,7 @@ import java.util.List;
  */
 
 @Path("/student")
-public class studentResource {
+public class StudentResource {
 
     private StudentRepo studentRepo = new StudentRepo();
 
@@ -37,6 +37,10 @@ public class studentResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response add(@HeaderParam("name") String name, @HeaderParam("address") String address, @HeaderParam("company") String company) throws SQLException, ClassNotFoundException {
         int a = studentRepo.add(name, address, company);
-        return Response.ok().build();
+        if (a == 1) {
+            return Response.status(Response.Status.CREATED).build();
+        } else {
+            return Response.status(Response.Status.NOT_ACCEPTABLE).entity("Student kon niet toegevoegd worden.").build();
+        }
     }
 }
