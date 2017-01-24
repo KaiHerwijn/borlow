@@ -22,25 +22,42 @@ public class StudentResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Student> getAll() throws SQLException, ClassNotFoundException {
-        return studentRepo.getAll();
+    public List<Student> getAll() throws ResourceException {
+        try {
+            return studentRepo.getAll();
+        } catch (SQLException e) {
+            throw new ResourceException("SQL-exception");
+        } catch (ClassNotFoundException e) {
+            throw new ResourceException("Class not found");
+        }
     }
 
     @GET
     @Path("/{id : \\d+}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Student get(@PathParam("id") int id ) throws NotFoundException, SQLException, ClassNotFoundException {
-        return studentRepo.get(id);
+    public Student get(@PathParam("id") int id ) throws ResourceException {
+        try {
+            return studentRepo.get(id);
+        } catch (SQLException e) {
+            throw new ResourceException("SQL-exception");
+        } catch (ClassNotFoundException e) {
+            throw new ResourceException("Class not found");
+        }
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response add(@HeaderParam("name") String name, @HeaderParam("address") String address, @HeaderParam("company") String company) throws SQLException, ClassNotFoundException {
-        int a = studentRepo.add(name, address, company);
-        if (a == 1) {
-            return Response.status(Response.Status.CREATED).build();
-        } else {
-            return Response.status(Response.Status.NOT_ACCEPTABLE).entity("Student kon niet toegevoegd worden.").build();
+    public void add(@HeaderParam("name") String name, @HeaderParam("address") String address, @HeaderParam("company") String company) throws ResourceException {
+        int a = 0;
+        try {
+            a = studentRepo.add(name, address, company);
+        } catch (SQLException e) {
+            throw new ResourceException("SQL-exception");
+        } catch (ClassNotFoundException e) {
+            throw new ResourceException("Class not found");
+        }
+        if (a != 0) {
+            throw new ResourceException("NotAllowedException - Student kon niet toegevoegd worden.");
         }
     }
 }
