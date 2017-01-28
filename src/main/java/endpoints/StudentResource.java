@@ -1,13 +1,11 @@
 package endpoints;
 
 
-import database.Database;
 import models.Student;
 import repositories.StudentRepo;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -26,9 +24,9 @@ public class StudentResource {
         try {
             return studentRepo.getAll();
         } catch (SQLException e) {
-            throw new ResourceException("SQL-exception");
+            throw new ResourceException("SQL-exception", e);
         } catch (ClassNotFoundException e) {
-            throw new ResourceException("Class not found");
+            throw new ResourceException("Class not found", e);
         }
     }
 
@@ -39,25 +37,21 @@ public class StudentResource {
         try {
             return studentRepo.get(id);
         } catch (SQLException e) {
-            throw new ResourceException("SQL-exception");
+            throw new ResourceException("SQL-exception", e);
         } catch (ClassNotFoundException e) {
-            throw new ResourceException("Class not found");
+            throw new ResourceException("Class not found", e);
         }
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public void add(@HeaderParam("name") String name, @HeaderParam("address") String address, @HeaderParam("company") String company) throws ResourceException {
-        int a = 0;
         try {
-            a = studentRepo.add(name, address, company);
+            studentRepo.add(name, address, company);
         } catch (SQLException e) {
-            throw new ResourceException("SQL-exception");
+            throw new ResourceException("SQL-exception", e);
         } catch (ClassNotFoundException e) {
-            throw new ResourceException("Class not found");
-        }
-        if (a != 0) {
-            throw new ResourceException("NotAllowedException - Student kon niet toegevoegd worden.");
+            throw new ResourceException("Class not found", e);
         }
     }
 }

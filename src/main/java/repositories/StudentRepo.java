@@ -16,7 +16,7 @@ public class StudentRepo extends Database<Student> {
     public int add(String name, String address, String company) throws SQLException, ClassNotFoundException {
         super.getConnection();
 
-        String query = "INSERT INTO `student` (name, address, company) VALUES (?,?,?)";
+        String query = "INSERT INTO student (name, address, company) VALUES (?,?,?)";
         PreparedStatement preparedStmt = connection.prepareStatement(query);
         preparedStmt.setString(1, name);
         preparedStmt.setString(2, address);
@@ -48,11 +48,11 @@ public class StudentRepo extends Database<Student> {
         return studentList;
     }
 
-    public Student get(int id) throws SQLException, ClassNotFoundException {
+    public Student get(int id) throws SQLException, ClassNotFoundException, NotFoundException {
         super.getConnection();
 
-        String query = "SELECT * FROM stuff WHERE id = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        String query = "SELECT * FROM student WHERE id = ?";
+        preparedStatement = connection.prepareStatement(query);
 
         preparedStatement.setInt(1, id);
 

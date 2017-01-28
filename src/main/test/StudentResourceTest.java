@@ -27,7 +27,7 @@ public class StudentResourceTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Mock
-    StudentRepo stuffRepo = new StudentRepo();
+    StudentRepo studentRepo = new StudentRepo();
 
     @InjectMocks
     StudentResource sr;
@@ -35,11 +35,11 @@ public class StudentResourceTest {
     @Before
     public void setup() throws ResourceException {
         try {
-            when(stuffRepo.getAll()).thenReturn(new ArrayList<Student>());
+            when(studentRepo.getAll()).thenReturn(new ArrayList<Student>());
         } catch (SQLException e) {
-            throw new ResourceException("SQL-exception");
+            throw new ResourceException("SQL-exception", e);
         } catch (ClassNotFoundException e) {
-            throw new ResourceException("Class not found");
+            throw new ResourceException("Class not found", e);
         }
     }
 
@@ -49,11 +49,11 @@ public class StudentResourceTest {
         try {
             List<Student> studentList = sr.getAll();
 
-            verify(stuffRepo, times(1)).getAll();
+            verify(studentRepo, times(1)).getAll();
         } catch (SQLException e) {
-            throw new ResourceException("SQL-exception");
+            throw new ResourceException("SQL-exception", e);
         } catch (ClassNotFoundException e) {
-            throw new ResourceException("Class not found");
+            throw new ResourceException("Class not found", e);
         }
     }
 
@@ -63,11 +63,11 @@ public class StudentResourceTest {
         try {
             sr.add("Bart", "Bartbaan", "");
 
-            verify(stuffRepo, times(1)).add("Bart", "Bartbaan", "");
+            verify(studentRepo, times(1)).add("Bart", "Bartbaan", "");
         } catch (SQLException e) {
-            throw new ResourceException("SQL-exception");
+            throw new ResourceException("SQL-exception", e);
         } catch (ClassNotFoundException e) {
-            throw new ResourceException("Class not found");
+            throw new ResourceException("Class not found", e);
         }
     }
 

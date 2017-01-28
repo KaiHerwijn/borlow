@@ -29,8 +29,4 @@ public abstract class Database <E> {
         }
         connection.close();
     }
-
-    public abstract int add(String name, String address, String company) throws SQLException, ClassNotFoundException;
-    public abstract List<E> getAll() throws SQLException, ClassNotFoundException;
-    public abstract E get(int id) throws SQLException, ClassNotFoundException;
 }
